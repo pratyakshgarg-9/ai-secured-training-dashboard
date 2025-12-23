@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login | AI-SecureTrade</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      background: radial-gradient(circle at top, #0f172a, #020617);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .login-box {
+      width: 420px;
+      padding: 40px;
+      background: #020617;
+      border: 1px solid #1e293b;
+      border-radius: 14px;
+      box-shadow: 0 0 40px rgba(0,0,0,0.6);
+    }
+
+    h2 {
+      color: #22c55e;
+      margin-bottom: 25px;
+      text-align: center;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      border: 1px solid #334155;
+      background: #020617;
+      color: #e5e7eb;
+      font-size: 14px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      background: #22c55e;
+      color: #020617;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background: #16a34a;
+    }
+
+    .status {
+      font-size: 13px;
+      margin-top: 10px;
+      color: #cbd5f5;
+    }
+
+    .success {
+      color: #22c55e;
+    }
+
+    .error {
+      color: #ef4444;
+    }
+
+    #otpSection {
+      display: none;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="login-box">
+  <h2>Login</h2>
+
+  <!-- Username & Password -->
+  <input id="username" placeholder="Username">
+  <input id="password" type="password" placeholder="Password">
+
+  <!-- Generate OTP -->
+  <button type="button" onclick="generateOTP()">Generate OTP</button>
+  <div id="otpStatus" class="status"></div>
+
+  <!-- OTP Section -->
+  <div id="otpSection">
+    <input id="otp" placeholder="Enter OTP">
+    <button type="button" onclick="login()">Login</button>
+  </div>
+
+  <div id="loginStatus" class="status"></div>
+</div>
+
+<script src="js/common.js"></script>
+<script src="js/login.js"></script>
+
+</body>
+</html>

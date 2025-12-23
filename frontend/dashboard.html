@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<div class="container">
+  <h1>AI-Secured Trading Dashboard</h1>
+
+  <div class="dashboard-grid">
+
+    <!-- MARKET DATA -->
+    <div id="securityBanner"></div>
+    <div class="card">
+      <h3>Market Overview</h3>
+      <canvas id="marketChart" height="120"></canvas>
+      <p>NIFTY 50: <b>24,510</b></p>
+      <p>SENSEX: <b>81,230</b></p>
+      <p>INFY: ₹1,560</p>
+      <p>TCS: ₹3,890</p>
+    </div>
+    <div class="navbar">
+        <div class="logo">AI-SecureTrade</div>
+        <button onclick="logout()">Logout</button>
+    </div>
+
+
+    <!-- PORTFOLIO -->
+    <div class="card portfolio-box">
+      <h3>Your Portfolio</h3>
+
+      <div id="portfolioContent">
+        <p>Loading portfolio...</p>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="js/dashboard.js"></script>
+
+</body>
+</html>

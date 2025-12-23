@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+
+  <title>Portfolio</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h2>User Portfolio</h2>
+
+<div id="content">Loading portfolio...</div>
+
+<script>
+  // read username from URL
+  const params = new URLSearchParams(window.location.search);
+  const username = params.get("user");
+
+  if (!username) {
+    document.getElementById("content").innerText = "❌ User not found";
+  } else {
+    fetch(`http://127.0.0.1:8000/portfolio?username=${username}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.locked) {
+          document.getElementById("content").innerHTML = `
+            <div class="alert">
+              🔒 New device detected <br><br>
+              Please complete 2-step verification to access your portfolio.
+              <br><br>
+              <a href="verify.html?user=${username}">
+                <button>Verify Now</button>
+              </a>
+            </div>
+          `;
+        } else {
+          document.getElementById("content").innerHTML = `
+            <h3>Balance: ${data.balance}</h3>
+            <h4>Holdings:</h4>
+            <ul>
+              ${data.stocks.map(s => `<li>${s}</li>`).join("")}
+            </ul>
+          `;
+        }
+      })
+      .catch(() => {
+        document.getElementById("content").innerText =
+          "❌ Unable to load portfolio";
+      });
+  }
+</script>
+
+</body>
+</html>

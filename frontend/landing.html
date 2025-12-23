@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AI-Secured Trading Platform</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      background: radial-gradient(circle at top, #0f172a, #020617);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    .landing {
+      text-align: center;
+      animation: fadeIn 1.2s ease forwards;
+    }
+
+    h1 {
+      font-size: 36px;
+      color: #22c55e;
+      margin-bottom: 10px;
+    }
+
+    p {
+      max-width: 600px;
+      margin: auto;
+      color: #cbd5f5;
+      line-height: 1.6;
+    }
+
+    .actions {
+      margin-top: 30px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .btn {
+      padding: 12px 28px;
+      border-radius: 8px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform 0.2s;
+    }
+
+    .btn.primary {
+      background: #22c55e;
+      color: #020617;
+    }
+
+    .btn.secondary {
+      border: 1px solid #334155;
+      color: #e5e7eb;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+<div class="landing">
+  <h1>AI-Secured Trading Dashboard</h1>
+  <p>
+    Intelligent fraud prevention using behavioral biometrics,
+    geo-velocity detection and adaptive step-up authentication.
+  </p>
+
+  <div class="actions">
+    <a href="register.html" class="btn primary">Create Account</a>
+    <a href="login.html" class="btn secondary">Login</a>
+  </div>
+</div>
+
+</body>
+</html>
