@@ -1,11 +1,3 @@
-**# AI-Secured Trading Dashboard**
-
-
-
-**An AI-driven, risk-based authentication system inspired by real-world banking and trading platforms.**
-
-
-
 **## Overview**
 
 **This project demonstrates how modern financial applications use adaptive security instead of simple username-password authentication.**
@@ -145,8 +137,3 @@
 
 
 **In production, persistent databases and secure OTP delivery would be required**
-
-
-
-
-
