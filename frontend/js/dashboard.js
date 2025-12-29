@@ -1,5 +1,36 @@
 const params = new URLSearchParams(window.location.search);
 const user = params.get("user"); // ✅ FIXED
+const ctx = document.getElementById("marketChart");
+
+if (ctx && window.Chart) {
+  new Chart(ctx, {
+    type: "line",
+    data: {
+      labels: ["Mon", "Tue", "Wed", "Thu", "Fri"],
+      datasets: [{
+        label: "NIFTY 50",
+        data: [24100, 24250, 24310, 24480, 24510],
+        borderColor: "#2dd36f",
+        backgroundColor: "transparent",
+        borderWidth: 2,
+        tension: 0.4,
+        pointRadius: 4
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false }
+      },
+      scales: {
+        x: { grid: { display: false } },
+        y: { grid: { color: "#222" } }
+      }
+    }
+  });
+}
+
+
 
 if (!user) {
   alert("Session expired. Please login again.");

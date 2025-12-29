@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Security Admin Panel</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h2>Login Security Logs</h2>
+
+<table id="logTable" border="1" cellpadding="10">
+  <tr>
+    <th>User</th>
+    <th>Time</th>
+    <th>OTP</th>
+    <th>Risk</th>
+    <th>Decision</th>
+  </tr>
+</table>
+
+<script>
+fetch("http://127.0.0.1:8000/admin/logins")
+  .then(res => res.json())
+  .then(data => {
+    const table = document.getElementById("logTable");
+    data.forEach(log => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${log.username}</td>
+        <td>${log.time}</td>
+        <td>${log.otp}</td>
+        <td>${log.risk}</td>
+        <td>${log.decision}</td>
+      `;
+      table.appendChild(row);
+    });
+  });
+</script>
+
+</body>
+</html>

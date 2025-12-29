@@ -27,10 +27,7 @@ async function generateOTP() {
       return;
     }
 
-    // ✅ OTP RECEIVED — SHOW IT (DEMO MODE)
-    document.getElementById("otpStatus").innerText =
-      `✅ OTP generated (Demo OTP: ${data.otp})`;
-
+   
     // ✅ THIS IS THE LINE YOU ASKED ABOUT
     // It UNHIDES the OTP input + Login button
     document.getElementById("otpSection").style.display = "block";

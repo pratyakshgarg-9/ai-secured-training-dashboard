@@ -1,5 +1,8 @@
 fastapi
 uvicorn
-numpy
-geopy
 python-multipart
+pydantic
+geopy
+scikit-learn
+numpy
+requests
