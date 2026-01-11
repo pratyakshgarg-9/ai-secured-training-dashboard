@@ -1,4 +1,4 @@
-const BACKEND = "http://127.0.0.1:8000";
+const BACKEND = "https://ai-secured-training-dashboard.onrender.com";
 
 // --------------------
 // GENERATE OTP
@@ -27,9 +27,9 @@ async function generateOTP() {
       return;
     }
 
-   
-    // ✅ THIS IS THE LINE YOU ASKED ABOUT
-    // It UNHIDES the OTP input + Login button
+    document.getElementById("otpStatus").innerText =
+      "✅ OTP generated. Please check admin panel.";
+
     document.getElementById("otpSection").style.display = "block";
 
   } catch (err) {
@@ -37,6 +37,7 @@ async function generateOTP() {
       "❌ Backend not reachable";
   }
 }
+
 
 // --------------------
 // LOGIN
@@ -47,8 +48,7 @@ async function login() {
   const otp = document.getElementById("otp").value;
 
   if (!username || !password || !otp) {
-    document.getElementById("loginStatus").innerText =
-      "❌ Fill all fields";
+    document.getElementById("loginStatus").innerText = "❌ Fill all fields";
     return;
   }
 
@@ -70,30 +70,23 @@ async function login() {
 
     const data = await res.json();
 
-  if (data.access === "BLOCK") {
-    document.getElementById("loginStatus").innerText =
-    "❌ Login blocked due to suspicious activity";
-    return;
-  }
+    if (!res.ok) {
+      document.getElementById("loginStatus").innerText =
+        "❌ " + (data.detail || "Login failed");
+      return;
+    }
 
-  if (data.access === "VERIFY") {
-    document.getElementById("loginStatus").innerText =
-    "⚠️ New device detected. Verification required.";
+    if (data.access === "BLOCK") {
+      document.getElementById("loginStatus").innerText =
+        "❌ Login blocked due to suspicious activity";
+      return;
+    }
+
+    document.getElementById("loginStatus").innerText = "✅ Login successful";
 
     setTimeout(() => {
-      window.location.href = `verify.html?user=${username}`;
+      window.location.href = `dashboard.html?user=${username}`;
     }, 800);
-    return;
-  }
-
-// ✅ SAFE LOGIN
-document.getElementById("loginStatus").innerText =
-  "✅ Login successful";
-
-setTimeout(() => {
-  window.location.href = `dashboard.html?user=${username}`;
-}, 800);
-
 
   } catch (err) {
     document.getElementById("loginStatus").innerText =

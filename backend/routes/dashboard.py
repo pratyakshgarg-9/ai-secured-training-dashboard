@@ -3,22 +3,18 @@ from database import sessions
 
 router = APIRouter()
 
+@router.get("/session")
+def session(username: str):
+    return sessions.get(username, {"access": "PARTIAL", "verified": False})
+
 @router.get("/portfolio")
 def portfolio(username: str):
-    session = sessions.get(username)
-
-    if not session:
+    sess = sessions.get(username)
+    if not sess:
         return {"locked": True}
 
-    if session["access"] == "PARTIAL" and not session["verified"]:
+    # ✅ lock portfolio in PARTIAL mode
+    if sess["access"] == "PARTIAL" and not sess.get("verified", False):
         return {"locked": True}
 
-    return {
-        "locked": False,
-        "balance": "₹4,25,000",
-        "stocks": ["INFY", "TCS", "RELIANCE"]
-    }
-@router.get("/session")
-def get_session(username: str):
-    return sessions.get(username, {})
-
+    return {"locked": False}

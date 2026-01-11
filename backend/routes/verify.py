@@ -1,26 +1,29 @@
 from fastapi import APIRouter, HTTPException
 from database import users, sessions
-from utils.fingerprint import generate_fingerprint
+from utils.fingerprint import generate_fingerprint, fingerprint_match
 
 router = APIRouter()
 
 @router.post("/verify-device")
 def verify_device(data: dict):
     username = data.get("username")
-    fingerprint_data = data.get("fingerprint")
+    fp_data = data.get("fingerprint")
 
-    if username not in users:
+    user = users.get(username)
+    if not user:
         raise HTTPException(status_code=404, detail="User not found")
 
-    session = sessions.get(username)
-    if not session or session["access"] != "VERIFY":
-        raise HTTPException(status_code=403, detail="Verification not allowed")
+    incoming_fp = generate_fingerprint(fp_data or {})
+    stored_fp = user.get("fingerprint")
 
-    # Trust this device AFTER verification
-    users[username]["fingerprint"] = generate_fingerprint(fingerprint_data)
+    score = fingerprint_match(incoming_fp, stored_fp)
 
-    # Mark session verified
-    sessions[username]["verified"] = True
-    sessions[username]["access"] = "ALLOW"
+    # ✅ After verify, trust the new device by storing fingerprint
+    user["fingerprint"] = incoming_fp
+
+    sessions[username] = {
+        "access": "ALLOW",
+        "verified": True
+    }
 
     return {"status": "verified"}

@@ -1,7 +1,17 @@
-const params = new URLSearchParams(window.location.search);
-const user = params.get("user"); // ✅ FIXED
-const ctx = document.getElementById("marketChart");
+const BACKEND = "https://ai-secured-training-dashboard.onrender.com";
 
+const params = new URLSearchParams(window.location.search);
+const user = params.get("user");
+
+if (!user) {
+  alert("No user found in URL. Opening login page...");
+  window.location.href = "login.html";
+}
+
+// --------------------
+// CHART
+// --------------------
+const ctx = document.getElementById("marketChart");
 if (ctx && window.Chart) {
   new Chart(ctx, {
     type: "line",
@@ -10,52 +20,38 @@ if (ctx && window.Chart) {
       datasets: [{
         label: "NIFTY 50",
         data: [24100, 24250, 24310, 24480, 24510],
-        borderColor: "#2dd36f",
-        backgroundColor: "transparent",
         borderWidth: 2,
-        tension: 0.4,
-        pointRadius: 4
+        tension: 0.4
       }]
     },
     options: {
-      responsive: true,
-      plugins: {
-        legend: { display: false }
-      },
-      scales: {
-        x: { grid: { display: false } },
-        y: { grid: { color: "#222" } }
-      }
+      plugins: { legend: { display: false } }
     }
   });
-}
-
-
-
-if (!user) {
-  alert("Session expired. Please login again.");
-  window.location.href = "login.html";
+} else {
+  console.warn("Chart.js not loaded OR marketChart missing");
 }
 
 // --------------------
-// SESSION CHECK
+// SESSION (to show banner)
 // --------------------
-fetch(`http://127.0.0.1:8000/session?username=${user}`)
+fetch(`${BACKEND}/session?username=${encodeURIComponent(user)}`)
   .then(res => res.json())
   .then(data => {
-    if (data.access === "VERIFY") {
+    if (data.access === "PARTIAL") {
       document.getElementById("securityBanner").innerHTML = `
         <div class="alert">
-          ⚠ New device detected. Portfolio locked until verification.
+          ⚠ New device detected. Portfolio access locked until verification.
         </div>
       `;
     }
-  });
+  })
+  .catch(() => console.log("Session fetch failed"));
 
 // --------------------
 // PORTFOLIO
 // --------------------
-fetch(`http://127.0.0.1:8000/portfolio?username=${user}`)
+fetch(`${BACKEND}/portfolio?username=${encodeURIComponent(user)}`)
   .then(res => res.json())
   .then(data => {
     const box = document.getElementById("portfolioContent");
@@ -63,13 +59,13 @@ fetch(`http://127.0.0.1:8000/portfolio?username=${user}`)
     if (data.locked) {
       box.innerHTML = `
         <div class="blur">
-          <p>Balance: ₹4,25,000</p>
-          <p>INFY · TCS · RELIANCE</p>
-          <p>Last trade: BUY INFY</p>
+          <p><b>Balance:</b> ₹4,25,000</p>
+          <p><b>Holdings:</b> INFY, TCS, RELIANCE</p>
+          <p><b>Last trade:</b> BUY INFY</p>
         </div>
 
         <div class="overlay">
-          <p>New device detected</p>
+          <p>New device / risky login detected</p>
           <button onclick="verify()">Verify to Unlock</button>
         </div>
       `;
@@ -80,10 +76,14 @@ fetch(`http://127.0.0.1:8000/portfolio?username=${user}`)
         <p><b>Last trade:</b> BUY INFY</p>
       `;
     }
+  })
+  .catch(() => {
+    document.getElementById("portfolioContent").innerText =
+      "Unable to load portfolio";
   });
 
 function verify() {
-  window.location.href = `verify.html?user=${user}`;
+  window.location.href = `verify.html?user=${encodeURIComponent(user)}`;
 }
 
 function logout() {

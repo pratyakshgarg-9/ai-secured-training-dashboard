@@ -16,26 +16,10 @@
     <th>Risk</th>
     <th>Decision</th>
   </tr>
+  <tbody id="logs"></tbody>
 </table>
 
-<script>
-fetch("http://127.0.0.1:8000/admin/logins")
-  .then(res => res.json())
-  .then(data => {
-    const table = document.getElementById("logTable");
-    data.forEach(log => {
-      const row = document.createElement("tr");
-      row.innerHTML = `
-        <td>${log.username}</td>
-        <td>${log.time}</td>
-        <td>${log.otp}</td>
-        <td>${log.risk}</td>
-        <td>${log.decision}</td>
-      `;
-      table.appendChild(row);
-    });
-  });
-</script>
+<script src="js/admin.js"></script>
 
 </body>
 </html>

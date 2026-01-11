@@ -1,4 +1,4 @@
-fetch("https://YOUR_BACKEND.onrender.com/admin/logs")
+fetch("https://ai-secured-training-dashboard.onrender.com/admin/logs")
   .then(res => res.json())
   .then(data => {
     document.getElementById("logs").innerHTML =

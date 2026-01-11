@@ -3,7 +3,7 @@ async function register() {
   msg.innerText = "Registering...";
 
   try {
-    const res = await fetch("http://127.0.0.1:8000/register", {
+    const res = await fetch("https://ai-secured-training-dashboard.onrender.com/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

@@ -42,7 +42,7 @@ function enroll() {
   const params = new URLSearchParams(window.location.search);
   const user = params.get("user");
 
-  fetch("http://127.0.0.1:8000/enroll-typing", {
+  fetch("https://ai-secured-training-dashboard.onrender.com/enroll-typing", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
