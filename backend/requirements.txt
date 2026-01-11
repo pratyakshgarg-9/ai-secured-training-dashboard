@@ -6,3 +6,4 @@ geopy
 scikit-learn
 numpy
 requests
+gunicorn
